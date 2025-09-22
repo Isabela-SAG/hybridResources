@@ -1,11 +1,11 @@
 import json
-from scraping_profiles import profiles_scraping
+from scraping_profiles import profile_scraping
 
 def main():
     with open('linkedin_success_master.json', 'r', encoding='utf-8') as f:
         linkedin_data = json.load(f)
 
-    scraped_profiles = profiles_scraping(linkedin_data)
+    scraped_profiles = profile_scraping(linkedin_data)
 
     with open('scraped_profiles.json', 'w', encoding='utf-8') as f:
         json.dump(scraped_profiles, f, ensure_ascii=False, indent=4)
