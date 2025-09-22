@@ -8,7 +8,8 @@ def profile_scraping(linkedin_data):
   Extract profile information from Linkedin using data from recent graduate
   '''
   linkedin_urls = [item.get('LinkedIn URL') for item in linkedin_data if item.get('LinkedIn URL')]
-  linkedin_ids = [url.split('/in/')[-1].split('/')[0] for url in linkedin_urls]
+  #linkedin_ids = [url.split('/in/')[-1].split('/')[0] for url in linkedin_urls]
+  linkedin_ids = ['isabela=sag','otavioconquista']
   
   # Initialize with API key
   api_key = "li-r9CRYTKjdUbULQsdXtvk39_MmzxlmKzkK7I5zgouC42XMG9ZZcdx1KDhNwVS88iUSiGB4eCqiAt6hDgQpPQvcyD0zUNpbQ"
