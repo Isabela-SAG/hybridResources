@@ -26,6 +26,6 @@ jobs:
         run: |
           git config user.name "Isabela-SAG"
           git config user.email "isabela_sag@github.com"
-          git add resultado.json
-          git commit -m "Atualizando resultado.json automaticamente"
+          git add scraped_profiles .json
+          git commit -m "Atualizando scraped_profiles .json automaticamente"
           git push
