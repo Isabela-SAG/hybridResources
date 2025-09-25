@@ -55,7 +55,7 @@ def profile_scraping(linkedin_data):
         print(f"Error fetching overview for {profile_id}: Status Code {overview_response.status_code}")
         
       all_profiles_data.append(combined_data)
-      time.sleep(1) # Add a small delay to avoid hitting the rate limit
+      time.sleep(20) # Add a small delay to avoid hitting the rate limit
       
   # Transform the collected data
   transformed_data = []
@@ -91,9 +91,34 @@ def profile_scraping(linkedin_data):
       "perfil": perfil_string.strip()
     })
 
-  transformed_json = json.dumps(transformed_data, indent=4)
-
-  output_transformed_file_path = 'scraping_linkedin_data.json'
-  with open(output_transformed_file_path, 'w') as f:
-    f.write(transformed_json)
-  return combined_json
+  normalized_data = []
+  
+  def normalize_characters(text):
+    """Converts special characters to their normal equivalents."""
+    text = text.replace('ç', 'c').replace('Ç', 'C')
+    text = text.replace('ã', 'a').replace('Ã', 'A')
+    text = text.replace('á', 'a').replace('Á', 'A')
+    text = text.replace('à', 'a').replace('À', 'A')
+    text = text.replace('é', 'e').replace('É', 'E')
+    text = text.replace('ê', 'e').replace('Ê', 'E')
+    text = text.replace('í', 'i').replace('Í', 'I')
+    text = text.replace('ó', 'o').replace('Ó', 'O')
+    text = text.replace('ô', 'o').replace('Ô', 'O')
+    text = text.replace('ú', 'u').replace('Ú', 'U')
+    text = text.replace('ü', 'u').replace('Ü', 'U')
+    text = text.replace('ñ', 'n').replace('Ñ', 'N')
+    # Add more replacements as needed
+    return text
+    
+  for item in transformed_data:
+    normalized_perfil = normalize_characters(item.get('perfil', ''))
+    normalized_data.append({
+      "id": item.get('id', 'N/A'),
+      "perfil": normalized_perfil
+    })
+  
+  normalized_json = json.dumps(normalized_data, indent=4, ensure_ascii=False)
+  output_normalized_file_path = 'likedin_profiles.json'
+  with open(output_normalized_file_path, 'w', encoding='utf-8') as f:
+    f.write(normalized_json)
+  return normalized_json
