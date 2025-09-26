@@ -63,14 +63,17 @@ def profile_scraping(linkedin_data):
   for profile in all_profiles_data:
     profile_id = profile.get('fullName', 'N/A')  # Use 'fullName' as the ID
     summary = profile.get('summary', '') # Get summary here
+    link = profile.get('publicIdentifier', '')
     skills = profile.get('skills', [])
     education = profile.get('education', [])
     certifications = profile.get('certifications', []) # Include certifications as well
-
+    
     # Concatenate summary, skills, education, and certifications into a single string for 'perfil'
     perfil_string = ""
     if summary:
       perfil_string += "Summary: " + summary + ". "
+    if link:
+      link_string = "https://br.linkedin.com/in/"+link
     if skills:
       perfil_string += "Skills: " + ", ".join([skill.get('skillName', '') for skill in skills]) + ". "
     if education:
@@ -88,7 +91,8 @@ def profile_scraping(linkedin_data):
         
     transformed_data.append({
       "id": profile_id,
-      "perfil": perfil_string.strip()
+      "perfil": perfil_string.strip(),
+      "link": link_string
     })
 
   normalized_data = []
@@ -109,15 +113,18 @@ def profile_scraping(linkedin_data):
     text = text.replace('ñ', 'n').replace('Ñ', 'N')
     # Add more replacements as needed
     return text
-    
+  
   for item in transformed_data:
     normalized_perfil = normalize_characters(item.get('perfil', ''))
     normalized_data.append({
       "id": item.get('id', 'N/A'),
-      "perfil": normalized_perfil
+      "perfil": normalized_perfil,
+      "link": item.get('link', '')
     })
-  
+    
+  # Print the normalized data as a JSON string
   normalized_json = json.dumps(normalized_data, indent=4, ensure_ascii=False)
+
   output_normalized_file_path = 'likedin_profiles.json'
   with open(output_normalized_file_path, 'w', encoding='utf-8') as f:
     f.write(normalized_json)
