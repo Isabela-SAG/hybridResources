@@ -8,7 +8,7 @@ def profile_scraping(linkedin_data):
   Extract profile information from Linkedin using data from recent graduate
   '''
   # Fetch profile data using LinkdAPI
-  api_key = "li-r9CRYTKjdUbULQsdXtvk39_MmzxlmKzkK7I5zgouC42XMG9ZZcdx1KDhNwVS88iUSiGB4eCqiAt6hDgQpPQvcyD0zUNpbQ"
+  api_key = "'li-x9iGcadaE8qUFPq0-i5rzanqXpqSi2PKuLzwW_T0qn0iFki_xwpgBq_HVDb-fUedfZNk_2s7nwWkEKyLHfyX-f3OdIVhdA'"
   headers = {"X-linkdapi-apikey": f"{api_key}"}
 
   all_profiles_data = []
